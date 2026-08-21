@@ -1,0 +1,18 @@
+version: '3.9'
+services:
+  media-service:
+    image: limhai/media-service:latest
+    container_name: devkh-media-service
+    ports:
+      - "8085:8085"
+#    depends_on:
+#      - config-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 20s
+        max_attempts: 3
+        window: 120s
+    environment:
+      SPRING_PROFILES_ACTIVE: stage
+      SPRING_CONFIG_IMPORT: configserver:http://35.247.184.109:8888/
